@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>slider demo</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <style>#slider { margin: 10px; }	</style>
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="/static/jquery-ui/jquery-ui.min.js"></script>
+    <!--<link href="/static/css/gh.css" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+  <link href="/static/css/dashboard.css" rel="stylesheet">
+  <link href="/static/jsexe/GDP_ElementStyles.css" rel="stylesheet">
+  
+</head>
+<body>
+ 
+ <div id="button_divider">
+ 	<!--<li><a href="#" id="Stop_Timer">Stop Timer</a></li>-->
+ 	<button href="#" id="Start_Timer" type="button" class="btn clr-TAS btn-startstop" data-timerstate="true">Start</button>
+ 	<button href="#" id="Stop_Timer" type="button" class="btn clr-NT btn-startstop" data-timerstate="false">Stop</button>
+<p id="show_time"></p>
+ 
+ <script>
+ 
+ var slider;
+ var timer_count = 0;
+ var year_value = 0;
+ var quarter_value = -1;
+ var timer_running = "true";
+
+ </script>
+
+  <script>
+  
+
+  $(function(){
+  	var paragraph = $("#show_time");
+  	document.getElementById("show_time").innerHTML = "Year: "+year_value.toFixed(0)+" Qtr: "+quarter_value;
+  	slider = $("<div id='slider' style='height:600px;width:200px;background-color: black;'></div>").insertAfter(paragraph).slider({
+      min: 1,
+      max: 104,
+      range: "min",
+      animate: 200,
+      orientation: "vertical",
+      value: 0,
+    });
+    console.log("First Script");
+  });
+</script>
+
+<script>
+	var timer_state = $(".btn-startstop").click(function(e){
+		console.log(e);
+	  	$("#slider").data("timerstate",$(e.currentTarget).data("timerstate"))
+	  	console.log($("#slider").data("timerstate"));
+	  });
+
+	var myVar=setInterval(myTimer,500);
+
+	function myTimer() {
+	  
+
+      if (timer_count > 103){timer_count=0};
+      timer_running = $("#slider").data("timerstate");
+      
+      	slider.slider("value",timer_count);
+      	slider_value = slider.slider("option","value");
+      	year_value = 1990 + (timer_count/4);
+      	year_value = Math.floor(year_value);
+      	quarter_value = (timer_count % 4)+1;
+      	document.getElementById("show_time").innerHTML = "Year: "+year_value.toFixed(0)+" Qtr: "+quarter_value;
+      	//console.log($("slider").slider("option","value"));
+      	if (timer_running){timer_count++};
+  }
+</script>
+
+<script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/jsexe/modalFunctions.js"></script>
+<script src="/static/jsexe/ajaxCalls.js"></script>
+<script src="/static/jquery-ui/jquery-ui.min.js"></script>
+
+</body>
+</html>
+
